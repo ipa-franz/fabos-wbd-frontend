@@ -1,0 +1,48 @@
+.input-mask-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 5px;
+}
+
+.input-mask-label {
+  margin-right: 10px;
+  width: 150px;
+  text-align: left;
+}
+
+.label {
+  margin-bottom: 20px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.input-mask {
+  margin-left: 150px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  min-width: 100px;
+}
+
+.maschine-wrapper
+{
+  margin-top: 2%;
+  left: 2%;
+  position: absolute;
+}
+
+.maschine-user-wrapper
+{
+  margin-top: 2%;
+  left: 32%;
+  position: absolute;
+}
+
+.ai-wrapper
+{
+  margin-top: 2%;
+  left: 62%;
+  position: absolute;
+}
