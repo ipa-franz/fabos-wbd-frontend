@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { AasWebsocketService } from './aas-websocket.service';
 import { AssetAdministrationShellDescriptor, AssetAdministrationShellService, Submodel, ISubmodelElement } from 'src/swagger-typescript';
-import { FormsModule, NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -20,6 +19,11 @@ export class AppComponent {
   public wbdMaschineSubmodelValues: Array<Object> = [];
   public wbdMaschineUserSubmodelValues: Array<Object> = [];
 
+  /** check if value input changed */
+  maschineValueChanged: boolean[] = [];
+  maschineUserValueChanged: boolean[] = [];
+  aiValueChanged: boolean[] = [];
+
   constructor(private aasService: AssetAdministrationShellService) {
     // Start the WebSocket connection
     // this.aasWebSocketService.send('Hello Server!');
@@ -27,18 +31,7 @@ export class AppComponent {
 
   ngOnInit()
   {
-    this.aasService.getAssetAdministrationShell().subscribe({
-      next: (v) => {
-
-        // get aas
-        console.log(v); 
-        this.aasArray = v
-        this.aasId = this.aasArray[0].identification!.id
-        this.loadSubmodels();
-      },
-      error: (e) => { console.error(e) },
-      complete: () => { console.info('complete getAssetAdministrationShell') }
-    });
+    
 
     
   }
@@ -107,5 +100,88 @@ export class AppComponent {
     });
   }
 
-  onSubmit(form: NgForm) {}
+  onMInputChange(index: number) {
+    this.maschineValueChanged[index] = true;
+  }
+
+  onMUInputChange(index: number) {
+    this.maschineUserValueChanged[index] = true;
+  }
+
+  onAIInputChange(index: number) {
+    this.aiValueChanged[index] = true;
+  }
+
+  loadData() {
+    this.aasService.getAssetAdministrationShell().subscribe({
+      next: (v) => {
+
+        // get aas
+        console.log(v); 
+        this.aasArray = v
+        this.aasId = this.aasArray[0].identification!.id
+        this.loadSubmodels();
+      },
+      error: (e) => { console.error(e) },
+      complete: () => { console.info('complete getAssetAdministrationShell') }
+    });
+  }
+
+  /** Save all changes to the AAS Server */
+  saveChanges() {
+
+    for (let i = 0; i <= this.maschineValueChanged.length; i++)
+    {
+      if (this.maschineValueChanged[i] == true)
+      {
+        this.aasService.shellPutSubmodelElementValueByIdShort(this.aasId, 
+                                                              this.wbdMaschineSubmodel.idShort!, 
+                                                              this.wbdMaschineSubmodel.submodelElements![i].idShort!, 
+                                                              this.wbdMaschineSubmodel.submodelElements![i].value!).subscribe({
+          next: (v) => {},
+          error: (e) => { console.error(e) },
+          complete: () => { console.info('complete shellPutSubmodelElementValueByIdShort') }
+        });
+      }
+    }
+
+    for (let i = 0; i <= this.maschineUserValueChanged.length; i++)
+    {
+      if (this.maschineUserValueChanged[i] == true)
+      {
+        this.aasService.shellPutSubmodelElementValueByIdShort(this.aasId, 
+                                                              this.wbdMaschineUserSubmodel.idShort!, 
+                                                              this.wbdMaschineUserSubmodel.submodelElements![i].idShort!, 
+                                                              this.wbdMaschineUserSubmodel.submodelElements![i].value!).subscribe({
+          next: (v) => {},
+          error: (e) => { console.error(e) },
+          complete: () => { console.info('complete shellPutSubmodelElementValueByIdShort') }
+        });
+      }
+    }
+    
+    for (let i = 0; i <= this.aiValueChanged.length; i++)
+    {
+      if (this.aiValueChanged[i] == true)
+      {
+        this.aasService.shellPutSubmodelElementValueByIdShort(this.aasId, 
+                                                              this.wbdAiSubmodel.idShort!, 
+                                                              this.wbdAiSubmodel.submodelElements![i].idShort!, 
+                                                              this.wbdAiSubmodel.submodelElements![i].value!).subscribe({
+          next: (v) => {},
+          error: (e) => { console.error(e) },
+          complete: () => { console.info('complete shellPutSubmodelElementValueByIdShort') }
+        });
+      }
+    }
+
+    // reset all value change indicators
+    this.maschineValueChanged = this.maschineValueChanged.map(_ => false);
+    this.maschineUserValueChanged = this.maschineUserValueChanged.map(_ => false);
+    this.aiValueChanged = this.aiValueChanged.map(_ => false);
+  }
+
+  calcResults() {
+
+  }
 }

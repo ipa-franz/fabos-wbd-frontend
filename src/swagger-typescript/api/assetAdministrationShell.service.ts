@@ -703,10 +703,10 @@ export class AssetAdministrationShellService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public shellPutSubmodelElementValueByIdShort(submodelIdShort: string, seIdShortPath: string, body?: any, observe?: 'body', reportProgress?: boolean): Observable<ElementValue>;
-    public shellPutSubmodelElementValueByIdShort(submodelIdShort: string, seIdShortPath: string, body?: any, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ElementValue>>;
-    public shellPutSubmodelElementValueByIdShort(submodelIdShort: string, seIdShortPath: string, body?: any, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ElementValue>>;
-    public shellPutSubmodelElementValueByIdShort(submodelIdShort: string, seIdShortPath: string, body?: any, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public shellPutSubmodelElementValueByIdShort(aasId: string, submodelIdShort: string, seIdShortPath: string, body?: any, observe?: 'body', reportProgress?: boolean): Observable<ElementValue>;
+    public shellPutSubmodelElementValueByIdShort(aasId: string, submodelIdShort: string, seIdShortPath: string, body?: any, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ElementValue>>;
+    public shellPutSubmodelElementValueByIdShort(aasId: string, submodelIdShort: string, seIdShortPath: string, body?: any, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ElementValue>>;
+    public shellPutSubmodelElementValueByIdShort(aasId: string, submodelIdShort: string, seIdShortPath: string, body?: any, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (submodelIdShort === null || submodelIdShort === undefined) {
             throw new Error('Required parameter submodelIdShort was null or undefined when calling shellPutSubmodelElementValueByIdShort.');
@@ -736,8 +736,8 @@ export class AssetAdministrationShellService {
         if (httpContentTypeSelected != undefined) {
             headers = headers.set('Content-Type', httpContentTypeSelected);
         }
-
-        return this.httpClient.request<ElementValue>('put',`${this.basePath}/aas/submodels/${encodeURIComponent(String(submodelIdShort))}/submodel/submodelElements/${encodeURIComponent(String(seIdShortPath))}/value`,
+                                                            `${this.basePath}/${aasId}/aas/submodels/${encodeURIComponent(String(submodelIdShort))}/submodel/values`
+        return this.httpClient.request<ElementValue>('put',`${this.basePath}/${aasId}/aas/submodels/${encodeURIComponent(String(submodelIdShort))}/submodel/submodelElements/${encodeURIComponent(String(seIdShortPath))}/value`,
             {
                 body: body,
                 withCredentials: this.configuration.withCredentials,

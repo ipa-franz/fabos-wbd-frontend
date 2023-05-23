@@ -4,9 +4,12 @@
     <div class="label">
       Maschine Values
     </div>
-    <div *ngFor="let item of wbdMaschineSubmodel.submodelElements" class="input-mask-item">
+    <div *ngFor="let item of wbdMaschineSubmodel.submodelElements; let i = index" class="input-mask-item">
       <span class="input-mask-label">{{ item.idShort }}</span>
-      <span contenteditable="true" type="text" class="input-mask"> {{item.value}} </span>
+      <!--<span contenteditable="true" type="text" class="input-mask" [class.green-glow]="maschineValueChanged[i]"
+        (input)="onMInputChange(i, $event)" [(ngModel)]="wbdMaschineSubmodel.submodelElements![i].value"  > </span> -->
+        <input contenteditable="true" type="text" class="input-mask" [class.green-glow]="maschineValueChanged[i]"
+        (input)="onMInputChange(i)" [(ngModel)]="wbdMaschineSubmodel.submodelElements![i].value"  >
     </div>
   </div>
     
@@ -15,21 +18,36 @@
     <div class="label">
       Maschine User Values
     </div>
-    <div *ngFor="let item of wbdMaschineUserSubmodel.submodelElements" class="input-mask-item">
+    <div *ngFor="let item of wbdMaschineUserSubmodel.submodelElements; let i = index" class="input-mask-item">
       <span class="input-mask-label">{{ item.idShort }}</span>
-      <span contenteditable="true" type="text" class="input-mask"> {{item.value}} </span>
+      <!-- <span contenteditable="true" type="text" class="input-mask" [class.green-glow]="maschineUserValueChanged[i]"
+        (input)="onMUInputChange(i)">
+        {{ item.value }}
+      </span>-->
+      <input contenteditable="true" type="text" class="input-mask" [class.green-glow]="maschineUserValueChanged[i]"
+        (input)="onMUInputChange(i)" [(ngModel)]="wbdMaschineUserSubmodel.submodelElements![i].value"  >
     </div>
   </div>
+  
 
   <div class="ai-wrapper">
     <div class="label">
       WBD Service Values
     </div>
-    <div *ngFor="let item of wbdAiSubmodel.submodelElements" class="input-mask-item">
+    <div *ngFor="let item of wbdAiSubmodel.submodelElements; let i = index" class="input-mask-item">
       <span class="input-mask-label">{{ item.idShort }}</span>
-      <span contenteditable="true" type="text" class="input-mask"> {{item.value}} </span>
+      <!--<span contenteditable="true" type="text" class="input-mask" [class.green-glow]="aiValueChanged[i]"
+        (input)="onAIInputChange(i)">
+        {{ item.value }}
+      </span> -->
+      <input contenteditable="true" type="text" class="input-mask" [class.green-glow]="aiValueChanged[i]"
+        (input)="onAIInputChange(i)" [(ngModel)]="wbdAiSubmodel.submodelElements![i].value"  >
     </div>
   </div>
+
+  <button class="load-button button" (click)="loadData()">Load Data from AAS Server</button>
+  <button class="save-button button" (click)="saveChanges()">Save Changes</button>
+  <button class="calc-button button" (click)="calcResults()">Calculate Results</button>
 
   <div class="routerContent">
     <router-outlet></router-outlet>
