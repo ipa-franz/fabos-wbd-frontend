@@ -5,11 +5,10 @@ import { Injectable } from '@angular/core';
 })
 export class AasWebsocketService {
   private socket!: WebSocket;
-  private serverUrl = 'ws://localhost:8081:4001'; // Replace with your server URL
+  private serverUrl = 'ws://localhost:8765'; 
 
   constructor() {
-    // do not init the websocket
-    //this.initializeWebSocket();
+    this.initializeWebSocket();
   }
 
   private initializeWebSocket(): void {
@@ -18,9 +17,10 @@ export class AasWebsocketService {
       console.log('WebSocket connection established.');
     };
     this.socket.onmessage = (event) => {
-      const data = JSON.parse(event.data);
+      // const data = JSON.parse(event.data);
       // Process received data
-      console.log('Received data:', data);
+      // console.log('Received data:', data);
+      console.log('Received data:', event.data);
     };
     this.socket.onclose = () => {
       console.log('WebSocket connection closed.');

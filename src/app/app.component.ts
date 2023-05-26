@@ -19,14 +19,18 @@ export class AppComponent {
   public wbdMaschineSubmodelValues: Array<Object> = [];
   public wbdMaschineUserSubmodelValues: Array<Object> = [];
 
+  /** flag whether to show result screen or not */
+  public showResult: boolean = false;
+
   /** check if value input changed */
   maschineValueChanged: boolean[] = [];
   maschineUserValueChanged: boolean[] = [];
   aiValueChanged: boolean[] = [];
 
-  constructor(private aasService: AssetAdministrationShellService) {
+  constructor(private aasService: AssetAdministrationShellService, private aasWebSocketService: AasWebsocketService) {
     // Start the WebSocket connection
-    // this.aasWebSocketService.send('Hello Server!');
+    //this.aasWebSocketService.initializeWebSocket();
+    this.aasWebSocketService.send('Hello Server!');
   }
 
   ngOnInit()
@@ -182,6 +186,7 @@ export class AppComponent {
   }
 
   calcResults() {
-
+    // give wbd the order to calculate results
+    this.aasWebSocketService.send('calc');
   }
 }

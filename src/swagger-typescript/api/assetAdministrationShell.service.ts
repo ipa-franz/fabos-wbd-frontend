@@ -736,7 +736,7 @@ export class AssetAdministrationShellService {
         if (httpContentTypeSelected != undefined) {
             headers = headers.set('Content-Type', httpContentTypeSelected);
         }
-                                                            `${this.basePath}/${aasId}/aas/submodels/${encodeURIComponent(String(submodelIdShort))}/submodel/values`
+                                                            //`${this.basePath}/${aasId}/aas/submodels/${encodeURIComponent(String(submodelIdShort))}/submodel/values`
         return this.httpClient.request<ElementValue>('put',`${this.basePath}/${aasId}/aas/submodels/${encodeURIComponent(String(submodelIdShort))}/submodel/submodelElements/${encodeURIComponent(String(seIdShortPath))}/value`,
             {
                 body: body,
