@@ -1,4 +1,4 @@
-<div id="wrapper">
+<div id="wrapper" *ngIf="showResult == false">
 
   <div class="maschine-wrapper">
     <div class="label">
@@ -53,3 +53,46 @@
     <router-outlet></router-outlet>
   </div>
 </div>
+
+<table  class="comparison-table" *ngIf="showResult == true;">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Gesamtkosten</th>
+      <th>Umsatzerlöse</th>
+      <th>Gewinn pro Jahr</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Expected Revenue without AI Service</td>
+      <ng-container *ngFor="let item of wbdMaschineSubmodel.submodelElements; let i = index">
+        <td *ngIf="item.idShort == 'Gesamtkosten'">{{ wbdMaschineSubmodel.submodelElements![i].value }} €</td>
+        <td *ngIf="item.idShort == 'Umsatzerloes'">{{ wbdMaschineSubmodel.submodelElements![i].value }} €</td>
+        <td *ngIf="item.idShort == 'GewinnJahr'">{{ wbdMaschineSubmodel.submodelElements![i].value }} €</td>
+      </ng-container>
+    </tr>
+    <tr>
+      <td>Expected Revenue with AI Service</td>
+      <ng-container *ngFor="let item of wbdAiSubmodel.submodelElements; let i = index">
+        <td *ngIf="item.idShort == 'Gesamtkosten'">{{ wbdAiSubmodel.submodelElements![i].value }} €</td>
+        <td *ngIf="item.idShort == 'Umsatzerloes'">{{ wbdAiSubmodel.submodelElements![i].value }} €</td>
+        <td *ngIf="item.idShort == 'GewinnJahr'">{{ wbdAiSubmodel.submodelElements![i].value }} €</td>
+      </ng-container>
+    </tr>
+    <tr>
+      <td>Difference</td>
+      <ng-container *ngFor="let item1 of wbdMaschineSubmodel.submodelElements; let i = index">
+        <ng-container *ngFor="let item2 of wbdAiSubmodel.submodelElements; let k = index">
+          <td *ngIf="item1.idShort == 'Gesamtkosten' && item2.idShort == 'Gesamtkosten'">{{ calcDiff(wbdAiSubmodel.submodelElements![k].value!, wbdMaschineSubmodel.submodelElements![i].value!) }} €</td>
+          <td *ngIf="item1.idShort == 'Umsatzerloes' && item2.idShort == 'Umsatzerloes'">{{ calcDiff(wbdAiSubmodel.submodelElements![k].value!, wbdMaschineSubmodel.submodelElements![i].value!) }} €</td>
+          <td *ngIf="item1.idShort == 'GewinnJahr' && item2.idShort == 'GewinnJahr'">{{ calcDiff(wbdAiSubmodel.submodelElements![k].value!, wbdMaschineSubmodel.submodelElements![i].value!) }} €</td>
+        </ng-container>
+      </ng-container>
+    </tr>
+  </tbody>
+</table>
+
+<button class="back-button button" *ngIf="showResult == true;" (click)="showResult = false;">
+Back to Overview
+</button>

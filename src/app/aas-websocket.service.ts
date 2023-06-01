@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Input } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -6,6 +7,14 @@ import { Injectable } from '@angular/core';
 export class AasWebsocketService {
   private socket!: WebSocket;
   private serverUrl = 'ws://localhost:8765'; 
+
+  resultId: number = 0;
+  /** used as return value for observable */
+  @Input() calc: any = null;
+  /** Observable Item sources as BehaviorSubject of calc */
+  private _calcSource = new BehaviorSubject(this.calc);
+  /** Observable Item stream which converts _calcSource to an Observable (which other Components can subscribe to) */
+  calcItem$ = this._calcSource.asObservable();
 
   constructor() {
     this.initializeWebSocket();
@@ -21,6 +30,12 @@ export class AasWebsocketService {
       // Process received data
       // console.log('Received data:', data);
       console.log('Received data:', event.data);
+
+      if (event.data == "result")
+      {
+        this.resultId = this.resultId + 1;
+        this._calcSource.next(this.resultId);
+      }
     };
     this.socket.onclose = () => {
       console.log('WebSocket connection closed.');

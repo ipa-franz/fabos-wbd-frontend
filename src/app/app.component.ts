@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AasWebsocketService } from './aas-websocket.service';
 import { AssetAdministrationShellDescriptor, AssetAdministrationShellService, Submodel, ISubmodelElement } from 'src/swagger-typescript';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -19,8 +20,12 @@ export class AppComponent {
   public wbdMaschineSubmodelValues: Array<Object> = [];
   public wbdMaschineUserSubmodelValues: Array<Object> = [];
 
+  /** Subscription for calculation results from the backend */
+  private calcSubscription: Subscription;
+
   /** flag whether to show result screen or not */
   public showResult: boolean = false;
+  private resultId: number = 0;
 
   /** check if value input changed */
   maschineValueChanged: boolean[] = [];
@@ -30,14 +35,31 @@ export class AppComponent {
   constructor(private aasService: AssetAdministrationShellService, private aasWebSocketService: AasWebsocketService) {
     // Start the WebSocket connection
     //this.aasWebSocketService.initializeWebSocket();
-    this.aasWebSocketService.send('Hello Server!');
+    this.aasWebSocketService.send('Frontend Startup');
+
+    // Initialize calcSubscription
+    this.calcSubscription = new Subscription();
   }
 
   ngOnInit()
   {
-    
+    // subscribe to calculation results
+    this.calcSubscription = this.aasWebSocketService.calcItem$
+    .subscribe((data: any) => 
+    {
+      console.log(data);
+      if (this.resultId < Number(data))
+      {
+        this.resultId = Number(data)
+        this.showResult = true;
+      }
+    });
+  }
 
-    
+  ngOnDestroy()
+  {
+    // unsubscribe
+    this.calcSubscription.unsubscribe();
   }
 
   loadSubmodels()
@@ -187,6 +209,12 @@ export class AppComponent {
 
   calcResults() {
     // give wbd the order to calculate results
+    //this.showResult = true;
     this.aasWebSocketService.send('calc');
+  }
+
+  calcDiff(value1: string, value2: string): number {
+    return Number(value1) - Number(value2);
+
   }
 }

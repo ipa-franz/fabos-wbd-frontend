@@ -75,6 +75,10 @@
 .calc-button {
   left: calc(50% + 10px);
 }
+.back-button {
+  left: calc(15%);
+  top: 180px;
+}
 
 .calc-button:hover,
 .save-button:hover {
@@ -84,4 +88,28 @@
 .calc-button:active,
 .save-button:active {
   background-color: rgb(97, 180, 227);
+}
+
+.comparison-table {
+  width: 60%;
+  left: 15%;
+  top: 20px;
+  position: absolute;
+  border-collapse: collapse;
+}
+
+.comparison-table th,
+.comparison-table td {
+  padding: 8px;
+  border: 1px solid #ccc;
+}
+
+.comparison-table th {
+  background-color: rgb(57, 180, 227);
+  text-align: left;
+  color: white;
+}
+
+.comparison-table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
 }
