@@ -1,3 +1,23 @@
+
+
+.header {
+  box-shadow: 0px 3px 3px -3px rgba(0,0,0,0.5);
+  background: #fff;
+  position: relative;
+  z-index: 2;
+  height: 130px;
+  width: 100%;
+}
+
+.logo {
+  position:absolute;
+  top: 20px;
+  left: 15%;
+  z-index: 5;
+  height: 33px;
+  width: 200px;
+}
+
 .input-mask-item {
   display: flex;
   align-items: center;
@@ -10,12 +30,15 @@
   margin-right: 10px;
   width: 150px;
   text-align: left;
+  color:#777;
 }
 
 .label {
   margin-bottom: 20px;
   font-size: 18px;
   font-weight: bold;
+  color: #777;
+  margin-bottom: 40px;
 }
 
 .input-mask {
@@ -37,7 +60,7 @@
 .maschine-user-wrapper
 {
   margin-top: 4%;
-  left: 32%;
+  left: 34%;
   position: absolute;
   padding-bottom: 100px;
 }
@@ -45,7 +68,7 @@
 .ai-wrapper
 {
   margin-top: 4%;
-  left: 62%;
+  left: 66%;
   position: absolute;
   padding-bottom: 100px;
 }
@@ -56,44 +79,54 @@
 
 .button {
   padding: 8px 16px;
-  background-color: rgb(57, 180, 227);
+  background-color: rgb(255, 255, 255);
   color: white;
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  width: 200px;
+  width: 210px;
   position: absolute;
-  height: 40px;
+  height: 60px;
+  color: #777;
+  border-radius: 0px;
+  top: 70px;
+  z-index: 3;
+  font-size: 16px;
 }
 
 .load-button {
-  left: calc(50% - 430px);
+  left: calc(15%);
 }
 .save-button {
-  left: calc(50% - 210px);
+  left: calc(15% + 210px);
 }
 .calc-button {
-  left: calc(50% + 10px);
+  left: calc(15% + 420px);
 }
 .back-button {
   left: calc(15%);
-  top: 180px;
 }
 
+.load-button:hover,
+.back-button:hover,
 .calc-button:hover,
 .save-button:hover {
   background-color: rgb(97, 180, 227);
+  color:white;
 }
 
+.load-button:active,
+.back-button:active,
 .calc-button:active,
 .save-button:active {
   background-color: rgb(97, 180, 227);
+  color: white;
 }
 
 .comparison-table {
   width: 60%;
   left: 15%;
-  top: 20px;
+  top: 150px;
   position: absolute;
   border-collapse: collapse;
 }

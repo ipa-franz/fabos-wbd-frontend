@@ -50,6 +50,7 @@ export class AppComponent {
       console.log(data);
       if (this.resultId < Number(data))
       {
+        this.loadData();
         this.resultId = Number(data)
         this.showResult = true;
       }
