@@ -8,10 +8,12 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AasWebsocketService } from './aas-websocket.service';
 import { AssetAdministrationShellService } from 'src/swagger-typescript';
+import { TwoDigitsDirectiveDirective } from './two-digits-directive.directive';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    TwoDigitsDirectiveDirective
   ],
   imports: [
     BrowserModule,

@@ -13,7 +13,7 @@
       <!--<span contenteditable="true" type="text" class="input-mask" [class.green-glow]="maschineValueChanged[i]"
         (input)="onMInputChange(i, $event)" [(ngModel)]="wbdMaschineSubmodel.submodelElements![i].value"  > </span> -->
         <input contenteditable="true" type="text" class="input-mask" [class.green-glow]="maschineValueChanged[i]"
-        (input)="onMInputChange(i)" [(ngModel)]="wbdMaschineSubmodel.submodelElements![i].value"  >
+        (input)="onMInputChange(i)" [(ngModel)]="wbdMaschineSubmodel.submodelElements![i].value"  appTwoDigits>
     </div>
   </div>
     
@@ -29,7 +29,7 @@
         {{ item.value }}
       </span>-->
       <input contenteditable="true" type="text" class="input-mask" [class.green-glow]="maschineUserValueChanged[i]"
-        (input)="onMUInputChange(i)" [(ngModel)]="wbdMaschineUserSubmodel.submodelElements![i].value"  >
+        (input)="onMUInputChange(i)" [(ngModel)]="wbdMaschineUserSubmodel.submodelElements![i].value"  appTwoDigits>
     </div>
   </div>
   
@@ -45,7 +45,7 @@
         {{ item.value }}
       </span> -->
       <input contenteditable="true" type="text" class="input-mask" [class.green-glow]="aiValueChanged[i]"
-        (input)="onAIInputChange(i)" [(ngModel)]="wbdAiSubmodel.submodelElements![i].value"  >
+        (input)="onAIInputChange(i)" [(ngModel)]="wbdAiSubmodel.submodelElements![i].value " appTwoDigits>
     </div>
   </div>
 
@@ -90,26 +90,26 @@
     <tr>
       <td>Expected Revenue without AI Service</td>
       <ng-container *ngFor="let item of wbdMaschineSubmodel.submodelElements; let i = index">
-        <td *ngIf="item.idShort == 'Gesamtkosten'">{{ wbdMaschineSubmodel.submodelElements![i].value }} €</td>
-        <td *ngIf="item.idShort == 'Umsatzerloes'">{{ wbdMaschineSubmodel.submodelElements![i].value }} €</td>
-        <td *ngIf="item.idShort == 'GewinnJahr'">{{ wbdMaschineSubmodel.submodelElements![i].value }} €</td>
+        <td *ngIf="item.idShort == 'Gesamtkosten'">{{ wbdMaschineSubmodel.submodelElements![i].value | number: '1.2-2' }} €</td>
+        <td *ngIf="item.idShort == 'Umsatzerloes'">{{ wbdMaschineSubmodel.submodelElements![i].value | number: '1.2-2' }} €</td>
+        <td *ngIf="item.idShort == 'GewinnJahr'">{{ wbdMaschineSubmodel.submodelElements![i].value | number: '1.2-2' }} €</td>
       </ng-container>
     </tr>
     <tr>
       <td>Expected Revenue with AI Service</td>
       <ng-container *ngFor="let item of wbdAiSubmodel.submodelElements; let i = index">
-        <td *ngIf="item.idShort == 'Gesamtkosten'">{{ wbdAiSubmodel.submodelElements![i].value }} €</td>
-        <td *ngIf="item.idShort == 'Umsatzerloes'">{{ wbdAiSubmodel.submodelElements![i].value }} €</td>
-        <td *ngIf="item.idShort == 'GewinnJahr'">{{ wbdAiSubmodel.submodelElements![i].value }} €</td>
+        <td *ngIf="item.idShort == 'Gesamtkosten'">{{ wbdAiSubmodel.submodelElements![i].value | number: '1.2-2' }} €</td>
+        <td *ngIf="item.idShort == 'Umsatzerloes'">{{ wbdAiSubmodel.submodelElements![i].value | number: '1.2-2' }} €</td>
+        <td *ngIf="item.idShort == 'GewinnJahr'">{{ wbdAiSubmodel.submodelElements![i].value | number: '1.2-2' }} €</td>
       </ng-container>
     </tr>
     <tr>
       <td>Difference</td>
       <ng-container *ngFor="let item1 of wbdMaschineSubmodel.submodelElements; let i = index">
         <ng-container *ngFor="let item2 of wbdAiSubmodel.submodelElements; let k = index">
-          <td *ngIf="item1.idShort == 'Gesamtkosten' && item2.idShort == 'Gesamtkosten'">{{ calcDiff(wbdAiSubmodel.submodelElements![k].value!, wbdMaschineSubmodel.submodelElements![i].value!) }} €</td>
-          <td *ngIf="item1.idShort == 'Umsatzerloes' && item2.idShort == 'Umsatzerloes'">{{ calcDiff(wbdAiSubmodel.submodelElements![k].value!, wbdMaschineSubmodel.submodelElements![i].value!) }} €</td>
-          <td *ngIf="item1.idShort == 'GewinnJahr' && item2.idShort == 'GewinnJahr'">{{ calcDiff(wbdAiSubmodel.submodelElements![k].value!, wbdMaschineSubmodel.submodelElements![i].value!) }} €</td>
+          <td *ngIf="item1.idShort == 'Gesamtkosten' && item2.idShort == 'Gesamtkosten'">{{ calcDiff(wbdAiSubmodel.submodelElements![k].value!, wbdMaschineSubmodel.submodelElements![i].value!) | number: '1.2-2' }} €</td>
+          <td *ngIf="item1.idShort == 'Umsatzerloes' && item2.idShort == 'Umsatzerloes'">{{ calcDiff(wbdAiSubmodel.submodelElements![k].value!, wbdMaschineSubmodel.submodelElements![i].value!) | number: '1.2-2' }} €</td>
+          <td *ngIf="item1.idShort == 'GewinnJahr' && item2.idShort == 'GewinnJahr'">{{ calcDiff(wbdAiSubmodel.submodelElements![k].value!, wbdMaschineSubmodel.submodelElements![i].value!) | number: '1.2-2' }} €</td>
         </ng-container>
       </ng-container>
     </tr>

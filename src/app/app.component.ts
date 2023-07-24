@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { TwoDigitsDirectiveDirective } from './two-digits-directive.directive';
 import { AasWebsocketService } from './aas-websocket.service';
 import { AssetAdministrationShellDescriptor, AssetAdministrationShellService, Submodel, ISubmodelElement } from 'src/swagger-typescript';
 import { Subscription } from 'rxjs';
