@@ -49,9 +49,28 @@
     </div>
   </div>
 
-  <button class="load-button button" (click)="loadData()">Load Data from AAS Server</button>
-  <button class="save-button button" (click)="saveChanges()">Save Changes</button>
-  <button class="calc-button button" (click)="calcResults()">Calculate Results</button>
+  <div id="choice-wrapper" *ngIf="showChoice == true">
+
+    <div class="machine-dropdown">
+      <button class="machine-dropdown-button button" (click)="machineToggleDropdown()">{{machineText}}</button>
+      <ul class="machine-dropdown-menu" [class.show]="showMachineDropdown">
+        <li *ngFor="let option of machineOptions" (click)="selectMachineOption(option)">{{ option }}</li>
+      </ul>
+    </div>
+
+    <div class="service-dropdown">
+      <button class="service-dropdown-button button" (click)="serviceToggleDropdown()">{{serviceText}}</button>
+      <ul class="service-dropdown-menu" [class.show]="showServiceDropdown">
+        <li *ngFor="let option of serviceOptions" (click)="selectServiceOption(option)">{{ option }}</li>
+      </ul>
+    </div>
+      
+  </div>
+
+  <button class="load-button button" (click)="nextData()" *ngIf="showChoice == true && machineText != 'Select a machine' && serviceText != 'Select a service'">Load Data from AAS Server</button>
+  <button class="load-button button" (click)="loadData()" *ngIf="showChoice == false">Refresh Data from AAS Server</button>
+  <button class="save-button button" (click)="saveChanges()" *ngIf="showChoice == false">Save Changes</button>
+  <button class="calc-button button" (click)="calcResults()" *ngIf="showChoice == false">Calculate Results</button>
 
   <div class="routerContent">
     <router-outlet></router-outlet>

@@ -19,18 +19,29 @@ export class AppComponent {
   public wbdAiSubmodelValues: Array<Object> = [];
   public wbdMaschineSubmodelValues: Array<Object> = [];
   public wbdMaschineUserSubmodelValues: Array<Object> = [];
+  public exampleMachines: Array<Submodel> = [];
+  public exampleServices: Array<Submodel> = [];
 
   /** Subscription for calculation results from the backend */
   private calcSubscription: Subscription;
 
   /** flag whether to show result screen or not */
   public showResult: boolean = false;
+  public showChoice: boolean = true;
   private resultId: number = 0;
 
   /** check if value input changed */
   maschineValueChanged: boolean[] = [];
   maschineUserValueChanged: boolean[] = [];
   aiValueChanged: boolean[] = [];
+
+  /** parameter for machine and service choice */
+  machineOptions: string[] = [];
+  serviceOptions: string[] = [];
+  showMachineDropdown: boolean = false;
+  showServiceDropdown: boolean = false;
+  machineText: string = "Select a machine";
+  serviceText: string = "Select a service";
 
   constructor(private aasService: AssetAdministrationShellService, private aasWebSocketService: AasWebsocketService) {
     // Start the WebSocket connection
@@ -48,19 +59,66 @@ export class AppComponent {
     .subscribe((data: any) => 
     {
       console.log(data);
-      if (this.resultId < Number(data))
+      if (data == "selected")
+      {
+        this.loadData()
+        this.showChoice = false;
+      }
+      else if (this.resultId < Number(data))
       {
         this.loadData();
         this.resultId = Number(data)
         this.showResult = true;
       }
     });
+  
+  }
+
+  ngAfterViewInit()
+  {
+    this.loadData()
   }
 
   ngOnDestroy()
   {
     // unsubscribe
     this.calcSubscription.unsubscribe();
+  }
+
+  loadExamples()
+  {
+    // load machine and service examples
+    this.aasService.getSubmodelsFromShell(this.aasId).subscribe({
+      next: (v) => {
+
+        // get submodel values
+        this.submodels = v
+        for (let model of this.submodels)
+        {
+          if (model.idShort == "maschine1" || model.idShort == "maschine2" || model.idShort == "maschine3")
+          {
+            this.exampleMachines.push(model);
+            for (let element of model.submodelElements!)
+            {
+              if (element.idShort == "Maschinenname")
+                this.machineOptions.push(element.value!)
+            }
+            
+          }
+          else if (model.idShort == "service1" || model.idShort == "service2" || model.idShort == "service3")
+          {
+            this.exampleServices.push(model);
+            for (let element of model.submodelElements!)
+            {
+              if (element.idShort == "Servicename")
+                this.serviceOptions.push(element.value!)
+            }
+          }
+        }
+      },
+      error: (e) => { console.error(e) },
+      complete: () => { console.info('complete getAssetAdministrationShell') }
+    });
   }
 
   loadSubmodels()
@@ -148,6 +206,8 @@ export class AppComponent {
         this.aasArray = v
         this.aasId = this.aasArray[0].identification!.id
         this.loadSubmodels();
+        if (this.machineOptions.length == 0)
+          this.loadExamples();
       },
       error: (e) => { console.error(e) },
       complete: () => { console.info('complete getAssetAdministrationShell') }
@@ -217,5 +277,31 @@ export class AppComponent {
   calcDiff(value1: string, value2: string): number {
     return Number(value1) - Number(value2);
 
+  }
+
+  machineToggleDropdown() {
+    this.showMachineDropdown = !this.showMachineDropdown;
+  }
+
+  selectMachineOption(option: string) {
+    console.log('Selected option:', option);
+    this.machineText = option;
+    this.machineToggleDropdown();
+  }
+
+  serviceToggleDropdown() {
+    this.showServiceDropdown = !this.showServiceDropdown;
+  }
+
+  selectServiceOption(option: string) {
+    console.log('Selected option:', option);
+    this.serviceText = option;
+    this.serviceToggleDropdown();
+  }
+
+  nextData() {
+    this.aasWebSocketService.send('combi;'+ this.machineText + ';' + this.serviceText);
+    //this.loadData()
+    
   }
 }

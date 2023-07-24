@@ -36,6 +36,10 @@ export class AasWebsocketService {
         this.resultId = this.resultId + 1;
         this._calcSource.next(this.resultId);
       }
+      if (event.data == "selected")
+      {
+        this._calcSource.next("selected");
+      }
     };
     this.socket.onclose = () => {
       console.log('WebSocket connection closed.');

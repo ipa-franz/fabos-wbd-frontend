@@ -110,7 +110,9 @@
 .load-button:hover,
 .back-button:hover,
 .calc-button:hover,
-.save-button:hover {
+.save-button:hover,
+.machine-dropdown-button:hover,
+.service-dropdown-button:hover {
   background-color: rgb(97, 180, 227);
   color:white;
 }
@@ -145,4 +147,99 @@
 
 .comparison-table tbody tr:nth-child(even) {
   background-color: #f9f9f9;
+}
+
+
+
+
+
+#choice-wrapper {
+  width: 100%;
+  left: 0%;
+  top: 150px;
+  height: 100%;
+  position: absolute;
+  background-color: white;
+}
+
+.machine-dropdown {
+  width: 25%;
+  left: 15%;
+  position: absolute;
+  display: inline-block;
+}
+
+.machine-dropdown-button {
+  padding: 10px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  top: 0px;
+  width: 350px;
+}
+
+.machine-dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 70px;
+  width: 340px;
+  left: 0;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  color: #777;
+  font-size: 18px;
+  line-height: 30px;
+  padding-left: 10px;
+}
+
+.machine-dropdown-menu.show {
+  display: block;
+}
+
+.service-dropdown {
+  width: 25%;
+  left: 45%;
+  position: absolute;
+  display: inline-block;
+}
+
+.service-dropdown-button {
+  padding: 10px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  top: 0px;
+  width: 350px;
+}
+
+.service-dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 70px;
+  width: 340px;
+  left: 0;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  color: #777;
+  font-size: 18px;
+  line-height: 30px;
+  padding-left: 10px;
+}
+
+.service-dropdown-menu.show {
+  display: block;
+}
+
+li {
+  cursor: pointer;
+}
+
+li:hover {
+  cursor: pointer;
+  background-color: rgb(97, 180, 227);
+  color:white;
 }
